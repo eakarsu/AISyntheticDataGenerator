@@ -3,7 +3,31 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import FeaturePage from './pages/FeaturePage';
+import DatasetDetail from './pages/DatasetDetail';
+import SchemaBuilder from './pages/SchemaBuilder';
+import StreamingGenerator from './pages/StreamingGenerator';
+import SchemaInfer from './pages/SchemaInfer';
+import RedactPII from './pages/RedactPII';
+import DistributionPreserve from './pages/DistributionPreserve';
+import EdgeCases from './pages/EdgeCases';
 import Navbar from './components/Navbar';
+// === Batch 08 Gaps & Frontend Mounts ===
+import CfLlmPoweredSchemaInferenceAutoDetectingSchema from './pages/CfLlmPoweredSchemaInferenceAutoDetectingSchema'
+import CfDistributionLearningCapturingStatisticalPropertiesFromReal from './pages/CfDistributionLearningCapturingStatisticalPropertiesFromReal'
+import CfDifferentialPrivacySynthesisToPreventReIdentification from './pages/CfDifferentialPrivacySynthesisToPreventReIdentification'
+import CfRelationalDataGenerationRespectingForeignKeysAnd from './pages/CfRelationalDataGenerationRespectingForeignKeysAnd'
+import CfTargetedEdgeCaseAndOutlierGenerationFor from './pages/CfTargetedEdgeCaseAndOutlierGenerationFor'
+import CfDomainSpecificGeneratorsHealthcareFinanceWithRegulatory from './pages/CfDomainSpecificGeneratorsHealthcareFinanceWithRegulatory'
+import GapNoSyntheticDataGenerationEngineEndpoint from './pages/GapNoSyntheticDataGenerationEngineEndpoint'
+import GapNoSchemaInferenceFromSamples from './pages/GapNoSchemaInferenceFromSamples'
+import GapNoDistributionAwareGeneration from './pages/GapNoDistributionAwareGeneration'
+import GapNoDataMaskingAnonymizationAi from './pages/GapNoDataMaskingAnonymizationAi'
+import GapNoSchemaEditorBackend from './pages/GapNoSchemaEditorBackend'
+import GapNoDatasetPreviewEndpoint from './pages/GapNoDatasetPreviewEndpoint'
+import GapNoExportToCsvParquetJson from './pages/GapNoExportToCsvParquetJson'
+import GapNoPrivacyCompliancePiiRedaction from './pages/GapNoPrivacyCompliancePiiRedaction'
+import GapNoNotificationsIntegrationsAuditLogSubsystemsOnly from './pages/GapNoNotificationsIntegrationsAuditLogSubsystemsOnly'
+import GapNoMultiTenantProjectWorkspaces from './pages/GapNoMultiTenantProjectWorkspaces'
 
 const CATEGORIES = {
   tabular: { label: 'Tabular Data', icon: '📊', color: '#3B82F6', description: 'Generate structured CSV/table data with custom schemas' },
@@ -63,7 +87,31 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard categories={CATEGORIES} />} />
           <Route path="/feature/:category" element={<FeaturePage categories={CATEGORIES} />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/dataset/:id" element={<DatasetDetail />} />
+          <Route path="/schema-builder" element={<SchemaBuilder />} />
+          <Route path="/streaming" element={<StreamingGenerator />} />
+          <Route path="/schema-infer" element={<SchemaInfer />} />
+          <Route path="/redact-pii" element={<RedactPII />} />
+          <Route path="/distribution-preserve" element={<DistributionPreserve />} />
+          <Route path="/edge-cases" element={<EdgeCases />} />
+          {/* // === Batch 08 Gaps & Frontend Mounts === */}
+      <Route path="/cf-llm-powered-schema-inference-auto-detecting-schema-from-sample-data" element={<ProtectedRoute><CfLlmPoweredSchemaInferenceAutoDetectingSchema /></ProtectedRoute>} />
+      <Route path="/cf-distribution-learning-capturing-statistical-properties-from-real-data" element={<ProtectedRoute><CfDistributionLearningCapturingStatisticalPropertiesFromReal /></ProtectedRoute>} />
+      <Route path="/cf-differential-privacy-synthesis-to-prevent-re-identification" element={<ProtectedRoute><CfDifferentialPrivacySynthesisToPreventReIdentification /></ProtectedRoute>} />
+      <Route path="/cf-relational-data-generation-respecting-foreign-keys-and-cardinality" element={<ProtectedRoute><CfRelationalDataGenerationRespectingForeignKeysAnd /></ProtectedRoute>} />
+      <Route path="/cf-targeted-edge-case-and-outlier-generation-for-testing" element={<ProtectedRoute><CfTargetedEdgeCaseAndOutlierGenerationFor /></ProtectedRoute>} />
+      <Route path="/cf-domain-specific-generators-healthcare-finance-with-regulatory-presets" element={<ProtectedRoute><CfDomainSpecificGeneratorsHealthcareFinanceWithRegulatory /></ProtectedRoute>} />
+      <Route path="/gap-no-synthetic-data-generation-engine-endpoint" element={<ProtectedRoute><GapNoSyntheticDataGenerationEngineEndpoint /></ProtectedRoute>} />
+      <Route path="/gap-no-schema-inference-from-samples" element={<ProtectedRoute><GapNoSchemaInferenceFromSamples /></ProtectedRoute>} />
+      <Route path="/gap-no-distribution-aware-generation" element={<ProtectedRoute><GapNoDistributionAwareGeneration /></ProtectedRoute>} />
+      <Route path="/gap-no-data-masking-anonymization-ai" element={<ProtectedRoute><GapNoDataMaskingAnonymizationAi /></ProtectedRoute>} />
+      <Route path="/gap-no-schema-editor-backend" element={<ProtectedRoute><GapNoSchemaEditorBackend /></ProtectedRoute>} />
+      <Route path="/gap-no-dataset-preview-endpoint" element={<ProtectedRoute><GapNoDatasetPreviewEndpoint /></ProtectedRoute>} />
+      <Route path="/gap-no-export-to-csv-parquet-json" element={<ProtectedRoute><GapNoExportToCsvParquetJson /></ProtectedRoute>} />
+      <Route path="/gap-no-privacy-compliance-pii-redaction" element={<ProtectedRoute><GapNoPrivacyCompliancePiiRedaction /></ProtectedRoute>} />
+      <Route path="/gap-no-notifications-integrations-audit-log-subsystems-only-stub" element={<ProtectedRoute><GapNoNotificationsIntegrationsAuditLogSubsystemsOnly /></ProtectedRoute>} />
+      <Route path="/gap-no-multi-tenant-project-workspaces" element={<ProtectedRoute><GapNoMultiTenantProjectWorkspaces /></ProtectedRoute>} />
+      <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
     </div>

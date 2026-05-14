@@ -5,7 +5,7 @@ const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 const generateWithAI = async (prompt, category, options = {}) => {
   const apiKey = process.env.OPENROUTER_API_KEY;
-  const model = process.env.OPENROUTER_MODEL || 'anthropic/claude-haiku-4.5';
+  const model = process.env.OPENROUTER_MODEL || 'anthropic/claude-3-5-sonnet-20241022';
 
   if (!apiKey || apiKey === 'your_openrouter_api_key_here') {
     throw new Error('OpenRouter API key not configured. Please set OPENROUTER_API_KEY in .env file.');
@@ -94,4 +94,55 @@ function getSystemPrompt(category) {
   return prompts[category] || prompts.tabular;
 }
 
-module.exports = { generateWithAI };
+// Generate with a fully custom system prompt (for schema-first generation)
+const generateWithAICustomSystem = async (systemPrompt, userPrompt, options = {}) => {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  const model = process.env.OPENROUTER_MODEL || 'anthropic/claude-3-5-sonnet-20241022';
+
+  if (!apiKey || apiKey === 'your_openrouter_api_key_here') {
+    throw new Error('OpenRouter API key not configured.');
+  }
+
+  const startTime = Date.now();
+  const response = await fetch(OPENROUTER_API_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+      'HTTP-Referer': 'http://localhost:3000',
+      'X-Title': 'AI Synthetic Data Generator',
+    },
+    body: JSON.stringify({
+      model,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt },
+      ],
+      temperature: options.temperature || 0.5,
+      max_tokens: options.maxTokens || 4096,
+      response_format: { type: 'json_object' },
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`OpenRouter API error: ${response.status} - ${error}`);
+  }
+
+  const data = await response.json();
+  const duration = Date.now() - startTime;
+  const content = data.choices?.[0]?.message?.content || '{}';
+
+  let parsedResult;
+  try { parsedResult = JSON.parse(content); }
+  catch { parsedResult = { raw_output: content }; }
+
+  return {
+    result: parsedResult,
+    model: data.model || model,
+    tokens_used: data.usage?.total_tokens || 0,
+    duration_ms: duration,
+  };
+};
+
+module.exports = { generateWithAI, generateWithAICustomSystem };

@@ -214,6 +214,7 @@ function FeaturePage({ categories }) {
                     {new Date(item.updated_at).toLocaleDateString()}
                   </td>
                   <td className="cell-actions" onClick={(e) => e.stopPropagation()}>
+                    <button className="btn-icon" title="View Detail" onClick={() => navigate(`/dataset/${item.id}`)}>👁️</button>
                     <button className="btn-icon" title="Edit" onClick={() => handleEdit(item)}>✏️</button>
                     <button className="btn-icon" title="Delete" onClick={() => handleDelete(item.id)}>🗑️</button>
                   </td>

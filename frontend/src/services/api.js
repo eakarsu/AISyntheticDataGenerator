@@ -11,7 +11,14 @@ const getHeaders = () => {
 const handleResponse = async (response) => {
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.error || `HTTP ${response.status}`);
+    if (response.status === 503) {
+      const err = new Error(data.error || 'AI service unavailable: API key not configured on the server.');
+      err.status = 503;
+      throw err;
+    }
+    const err = new Error(data.error || `HTTP ${response.status}`);
+    err.status = response.status;
+    throw err;
   }
   return data;
 };
@@ -80,5 +87,58 @@ export const datasets = {
   getGenerationHistory: (category) =>
     fetch(`${API_BASE}/datasets/generations/history${category ? `?category=${category}` : ''}`, {
       headers: getHeaders(),
+    }).then(handleResponse),
+
+  export: (id, format = 'json') =>
+    fetch(`${API_BASE}/datasets/${id}/export?format=${format}`, {
+      headers: getHeaders(),
+    }),
+
+  validateDataset: (datasetId, category) =>
+    fetch(`${API_BASE}/datasets/generate/validate`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ datasetId, category }),
+    }).then(handleResponse),
+
+  generateFromSchema: (data) =>
+    fetch(`${API_BASE}/datasets/generate-from-schema`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(data),
+    }).then(handleResponse),
+
+  getPrivacyScore: (id) =>
+    fetch(`${API_BASE}/datasets/${id}/privacy-score`, {
+      method: 'POST',
+      headers: getHeaders(),
+    }).then(handleResponse),
+
+  schemaInfer: (data) =>
+    fetch(`${API_BASE}/datasets/schema-infer`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(data),
+    }).then(handleResponse),
+
+  redactPII: (data) =>
+    fetch(`${API_BASE}/datasets/redact-pii`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(data),
+    }).then(handleResponse),
+
+  distributionPreserve: (data) =>
+    fetch(`${API_BASE}/datasets/distribution-preserve`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(data),
+    }).then(handleResponse),
+
+  edgeCases: (data) =>
+    fetch(`${API_BASE}/datasets/edge-cases`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(data),
     }).then(handleResponse),
 };

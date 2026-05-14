@@ -47,9 +47,19 @@ const initDatabase = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
+      CREATE TABLE IF NOT EXISTS ai_results (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER,
+        endpoint VARCHAR(100),
+        input_data JSONB,
+        result JSONB,
+        created_at TIMESTAMP DEFAULT NOW()
+      );
+
       CREATE INDEX IF NOT EXISTS idx_datasets_category ON datasets(category);
       CREATE INDEX IF NOT EXISTS idx_generations_category ON generations(category);
       CREATE INDEX IF NOT EXISTS idx_generations_dataset_id ON generations(dataset_id);
+      CREATE INDEX IF NOT EXISTS idx_ai_results_user_endpoint ON ai_results(user_id, endpoint);
     `);
     console.log('Database tables initialized successfully');
   } finally {
