@@ -70,6 +70,14 @@ app.use('/api/gap-no-privacy-compliance-pii-redaction', require('./routes/gapNoP
 app.use('/api/gap-no-notifications-integrations-audit-log-subsystems-only-stub', require('./routes/gapNoNotificationsIntegrationsAuditLogSubsystemsOnlyStub'));
 app.use('/api/gap-no-multi-tenant-project-workspaces', require('./routes/gapNoMultiTenantProjectWorkspaces'));
 
+// Custom Views (Synth Views) - mounted BEFORE 404 handler
+app.use('/api/custom-views', require('./routes/customViews'));
+
+// 404 handler for unmatched /api routes
+app.use('/api', (req, res) => {
+  res.status(404).json({ error: 'Not found', path: req.path });
+});
+
 app.listen(PORT, () => {
       console.log(`Backend server running on http://localhost:${PORT}`);
     });

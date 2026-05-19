@@ -11,6 +11,7 @@ import RedactPII from './pages/RedactPII';
 import DistributionPreserve from './pages/DistributionPreserve';
 import EdgeCases from './pages/EdgeCases';
 import Navbar from './components/Navbar';
+import CustomViewsPage from './pages/CustomViewsPage';
 // === Batch 08 Gaps & Frontend Mounts ===
 import CfLlmPoweredSchemaInferenceAutoDetectingSchema from './pages/CfLlmPoweredSchemaInferenceAutoDetectingSchema'
 import CfDistributionLearningCapturingStatisticalPropertiesFromReal from './pages/CfDistributionLearningCapturingStatisticalPropertiesFromReal'
@@ -48,6 +49,11 @@ const CATEGORIES = {
 };
 
 export { CATEGORIES };
+
+// Inline ProtectedRoute stub: relies on top-level auth gate in App
+function ProtectedRoute({ children }) {
+  return children;
+}
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -94,6 +100,7 @@ function App() {
           <Route path="/redact-pii" element={<RedactPII />} />
           <Route path="/distribution-preserve" element={<DistributionPreserve />} />
           <Route path="/edge-cases" element={<EdgeCases />} />
+          <Route path="/custom-views" element={<CustomViewsPage />} />
           {/* // === Batch 08 Gaps & Frontend Mounts === */}
       <Route path="/cf-llm-powered-schema-inference-auto-detecting-schema-from-sample-data" element={<ProtectedRoute><CfLlmPoweredSchemaInferenceAutoDetectingSchema /></ProtectedRoute>} />
       <Route path="/cf-distribution-learning-capturing-statistical-properties-from-real-data" element={<ProtectedRoute><CfDistributionLearningCapturingStatisticalPropertiesFromReal /></ProtectedRoute>} />

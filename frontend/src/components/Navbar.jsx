@@ -37,6 +37,7 @@ function Navbar({ user, onLogout }) {
         {navBtn('Redact PII', '/redact-pii')}
         {navBtn('Distribution', '/distribution-preserve')}
         {navBtn('Edge Cases', '/edge-cases')}
+        {navBtn('Synth Views', '/custom-views')}
       </div>
       <div className="navbar-right">
         <div className="navbar-user">
