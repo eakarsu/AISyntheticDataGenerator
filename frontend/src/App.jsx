@@ -12,6 +12,11 @@ import DistributionPreserve from './pages/DistributionPreserve';
 import EdgeCases from './pages/EdgeCases';
 import Navbar from './components/Navbar';
 import CustomViewsPage from './pages/CustomViewsPage';
+import CodexCustomVizFeature from './pages/CodexCustomVizFeature';
+import CodexOperationsFeature from './pages/CodexOperationsFeature';
+
+import TimelineView from './pages/TimelineView';
+
 // === Batch 08 Gaps & Frontend Mounts ===
 import CfLlmPoweredSchemaInferenceAutoDetectingSchema from './pages/CfLlmPoweredSchemaInferenceAutoDetectingSchema'
 import CfDistributionLearningCapturingStatisticalPropertiesFromReal from './pages/CfDistributionLearningCapturingStatisticalPropertiesFromReal'
@@ -91,6 +96,10 @@ function App() {
       <Navbar user={user} onLogout={handleLogout} />
       <main className="main-content">
         <Routes>
+        <Route path="/insights/timeline" element={<ProtectedRoute><TimelineView /></ProtectedRoute>} />
+        <Route path="/codex/custom-viz" element={<ProtectedRoute><CodexCustomVizFeature /></ProtectedRoute>} />
+        <Route path="/codex/operations" element={<ProtectedRoute><CodexOperationsFeature /></ProtectedRoute>} />
+
           <Route path="/" element={<Dashboard categories={CATEGORIES} />} />
           <Route path="/feature/:category" element={<FeaturePage categories={CATEGORIES} />} />
           <Route path="/dataset/:id" element={<DatasetDetail />} />
