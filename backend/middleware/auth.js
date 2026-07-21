@@ -1,16 +1,1 @@
-const jwt = require('jsonwebtoken');
-
-function authenticate(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-
-  if (!token) return res.status(401).json({ error: 'Access denied. No token provided.' });
-
-  jwt.verify(token, process.env.JWT_SECRET || 'default-secret', (err, user) => {
-    if (err) return res.status(403).json({ error: 'Invalid or expired token.' });
-    req.user = user;
-    next();
-  });
-}
-
-module.exports = { authenticate, authenticateToken: authenticate };
+'use strict';const jwt=require('jsonwebtoken'),{pool}=require('../config/database');function secret(){const value=String(process.env.JWT_SECRET||'');if(value.length<32)throw new Error('JWT_SECRET must contain at least 32 characters');return value;}async function authenticate(req,res,next){const header=String(req.headers.authorization||'');if(!header.startsWith('Bearer '))return res.status(401).json({error:'Access token required'});try{const claims=jwt.verify(header.slice(7),secret(),{issuer:'governed-synthetic-data',algorithms:['HS256']});const membership=await pool.query('SELECT role FROM synth_memberships WHERE tenant_id=$1 AND user_id=$2 AND active=TRUE',[claims.tenantId,claims.id]);if(!membership.rows[0])return res.status(403).json({error:'Active tenant membership required'});req.user={...claims,role:membership.rows[0].role};next();}catch(_error){res.status(401).json({error:'Invalid or expired access token'});}}module.exports={authenticate,authenticateToken:authenticate,secret};
