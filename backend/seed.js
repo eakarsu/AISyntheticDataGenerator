@@ -372,7 +372,7 @@ async function seed() {
     const total = Object.values(seedData).reduce((sum, items) => sum + items.length, 0);
     console.log(`\nSeed complete! Total datasets: ${total}`);
     console.log(`Categories: ${Object.keys(seedData).length}`);
-    console.log(`Default login: ${process.env.DEFAULT_EMAIL || 'admin@synthdata.ai'} / ${process.env.DEFAULT_PASSWORD || 'admin123'}`);
+    console.log('Demo login users provisioned from the local environment.');
 
   } catch (error) {
     console.error('Seed error:', error);
