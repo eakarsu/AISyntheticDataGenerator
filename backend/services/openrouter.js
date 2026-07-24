@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 require('dotenv').config({ path: require('path').join(__dirname, '../../.env') });
 
-const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const OPENROUTER_API_URL = `${(process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1').replace(/\/$/, '')}/chat/completions`;
 
 const generateWithAI = async (prompt, category, options = {}) => {
   const apiKey = process.env.OPENROUTER_API_KEY;
