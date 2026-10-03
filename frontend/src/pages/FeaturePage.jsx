@@ -25,7 +25,9 @@ function FeaturePage({ categories }) {
     setLoading(true);
     try {
       const data = await datasets.getAll(category);
-      setItems(data);
+      const items = Array.isArray(data) ? data : data?.data;
+      if (!Array.isArray(items)) throw new Error('Invalid list response');
+      setItems(items);
     } catch (err) {
       console.error('Failed to load items:', err);
     } finally {
