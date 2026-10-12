@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { datasets } from '../services/api';
+import FullFieldPresets from '../components/FullFieldPresets';
+import AIReport from '../components/AIReport';
 
 const SAMPLE_SCHEMA = `{
   "columns": [
@@ -10,6 +12,11 @@ const SAMPLE_SCHEMA = `{
     { "name": "signup_at", "type": "datetime", "nullable": false }
   ]
 }`;
+const EXAMPLES = [
+  { label: 'Numeric boundaries', values: { name: 'Example numeric boundary tests', count: 25, focus: 'Minimum, maximum, negative zero, and values just outside each numeric boundary.', schemaText: JSON.stringify({ columns: [{ name: 'quantity', type: 'number', nullable: false, min: 0, max: 100 }, { name: 'rating', type: 'number', nullable: true, min: 1, max: 5 }] }, null, 2) } },
+  { label: 'Text and encoding', values: { name: 'Example text edge cases', count: 40, focus: 'Unicode, empty strings, whitespace, long text, and punctuation.', schemaText: JSON.stringify({ columns: [{ name: 'description', type: 'string', nullable: true, max_length: 120 }, { name: 'region', type: 'string', nullable: false }] }, null, 2) } },
+  { label: 'Dates and categories', values: { name: 'Example date and category tests', count: 60, focus: 'Leap days, timezone boundaries, missing values, and uncommon enum entries.', schemaText: JSON.stringify({ columns: [{ name: 'event_date', type: 'datetime', nullable: false }, { name: 'status', type: 'enum', nullable: false, enum_values: ['new', 'active', 'closed'] }] }, null, 2) } },
+];
 
 function EdgeCases() {
   const [schemaText, setSchemaText] = useState(SAMPLE_SCHEMA);
@@ -53,6 +60,7 @@ function EdgeCases() {
       <p style={{ color: '#64748b', marginBottom: 24 }}>Generate edge-case rows that stress-test the boundaries of your schema.</p>
 
       <form onSubmit={handleSubmit} style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 24, marginBottom: 20 }}>
+        <FullFieldPresets value={{ schemaText, name, count, focus }} presets={EXAMPLES} disabled={loading} onChange={(values) => { setSchemaText(values.schemaText); setName(values.name); setCount(values.count); setFocus(values.focus); setError(null); setParseError(null); setResult(null); }} />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, marginBottom: 14 }}>
           <div>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: 6 }}>Dataset Name (optional)</label>
@@ -97,9 +105,7 @@ function EdgeCases() {
               </div>
             </div>
           )}
-          <pre style={{ background: '#f9fafb', padding: 14, borderRadius: 8, fontSize: 12, overflow: 'auto', whiteSpace: 'pre-wrap' }}>
-            {JSON.stringify(result.result || result, null, 2)}
-          </pre>
+          <AIReport response={result.result || result} title="Edge-case test report" />
         </div>
       )}
     </div>

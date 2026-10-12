@@ -1,6 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CATEGORIES } from '../App';
+import FullFieldPresets from '../components/FullFieldPresets';
+import FormattedAIReport from '../components/FormattedAIReport';
+
+const EXAMPLES = [
+  { label: 'Tabular sample', values: { category: 'tabular', batches: 2, prompt: 'Generate fictional product inventory rows with item IDs, descriptions, prices, stock counts, and availability. Use consistent fields and varied, realistic values.' } },
+  { label: 'Time-series sample', values: { category: 'timeseries', batches: 3, prompt: 'Generate fictional hourly equipment telemetry with timestamps, temperature, utilization, and status. Include expected value ranges and label the data synthetic.' } },
+  { label: 'Edge-case sample', values: { category: 'api_test', batches: 4, prompt: 'Generate fictional REST API test scenarios with request method, endpoint, input payload, expected status, and a concise validation note. Cover valid, boundary, and rejected inputs.' } },
+];
 
 function StreamingGenerator() {
   const navigate = useNavigate();
@@ -93,6 +101,9 @@ function StreamingGenerator() {
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div style={{ gridColumn: '1 / -1' }}>
+          <FullFieldPresets value={{ category, batches, prompt }} presets={EXAMPLES} disabled={running} onChange={(values) => { setCategory(values.category); setBatches(values.batches); setPrompt(values.prompt); setEvents([]); setProgress(0); setTotalBatches(0); }} />
+        </div>
         <div>
           <label style={{ fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Category</label>
           <select
@@ -194,7 +205,7 @@ function StreamingGenerator() {
       {events.length > 0 && (
         <div>
           <h3>Event Log</h3>
-          <div style={{ maxHeight: '400px', overflowY: 'auto', border: '1px solid #e5e7eb', borderRadius: '6px', padding: '0.75rem', fontFamily: 'monospace', fontSize: '0.85rem' }}>
+          <div style={{ maxHeight: '400px', overflowY: 'auto', border: '1px solid #e5e7eb', borderRadius: '8px', padding: '0.75rem', fontSize: '0.9rem', background: '#fff' }}>
             {events.map((ev, i) => (
               <div key={i} style={{
                 padding: '0.3rem 0',
@@ -214,7 +225,7 @@ function StreamingGenerator() {
                   ? `Starting ${ev.data.total_batches} batch(es) for category: ${ev.data.category}`
                   : ev.type === 'complete'
                   ? `All done! ${ev.data.batches_completed} batch(es) completed.`
-                  : JSON.stringify(ev.data)}
+                  : <FormattedAIReport response={ev.data} title={`${ev.type.replace(/_/g, ' ')} details`} />}
               </div>
             ))}
           </div>

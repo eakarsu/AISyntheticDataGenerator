@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { datasets } from '../services/api';
+import FullFieldPresets from './FullFieldPresets';
 
 const PROMPT_TEMPLATES = {
   tabular: 'Generate 10 rows of synthetic employee data with columns: id, name, email, department, role, salary, hire_date, performance_rating',
@@ -24,6 +25,12 @@ function GenerateModal({ category, categoryInfo, onResult, onClose }) {
   const [temperature, setTemperature] = useState(0.7);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const template = PROMPT_TEMPLATES[category] || `Generate fictional ${categoryInfo.label.toLowerCase()} records with realistic values and useful validation cases.`;
+  const examples = [
+    { label: 'Balanced dataset', values: { prompt: `Use this ${categoryInfo.label.toLowerCase()} brief: ${template}. Generate diverse fictional examples with consistent fields and realistic value ranges. Clearly label every record as synthetic; do not copy real people or confidential data.`, temperature: 0.4 } },
+    { label: 'Quality and edge cases', values: { prompt: `Use this ${categoryInfo.label.toLowerCase()} brief: ${template}. Generate synthetic examples that cover valid values, missing optional values, boundary conditions, and a small set of clearly labeled edge cases. Summarize the field assumptions.`, temperature: 0.2 } },
+    { label: 'Broad exploration', values: { prompt: `Use this ${categoryInfo.label.toLowerCase()} brief: ${template}. Generate a broader synthetic sample with several realistic categories and varied values. Explain the schema and flag assumptions; never present invented records as real.`, temperature: 0.8 } },
+  ];
 
   const handleGenerate = async () => {
     if (!prompt.trim()) {
@@ -63,6 +70,7 @@ function GenerateModal({ category, categoryInfo, onResult, onClose }) {
 
           <div className="form-group">
             <label>Prompt</label>
+            <FullFieldPresets value={{ prompt, temperature }} presets={examples} disabled={loading} onChange={(values) => { setPrompt(values.prompt); setTemperature(values.temperature); setError(''); }} />
             <textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
@@ -90,27 +98,6 @@ function GenerateModal({ category, categoryInfo, onResult, onClose }) {
             </div>
           </div>
 
-          <div className="prompt-suggestions">
-            <span className="suggestion-label">Quick prompts:</span>
-            <button
-              className="suggestion-chip"
-              onClick={() => setPrompt(PROMPT_TEMPLATES[category])}
-            >
-              Default template
-            </button>
-            <button
-              className="suggestion-chip"
-              onClick={() => setPrompt(`Generate 20 diverse ${categoryInfo.label.toLowerCase()} records with realistic values and edge cases`)}
-            >
-              Large dataset
-            </button>
-            <button
-              className="suggestion-chip"
-              onClick={() => setPrompt(`Generate 5 ${categoryInfo.label.toLowerCase()} records with intentional anomalies and outliers for testing`)}
-            >
-              With anomalies
-            </button>
-          </div>
         </div>
 
         <div className="modal-footer">

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { datasets } from '../services/api';
+import AIReport from '../components/AIReport';
 
 const SAMPLE = `[
   { "id": 1, "name": "Alice Smith", "email": "alice@example.com", "phone": "+1-555-0123", "ssn": "123-45-6789" },
@@ -83,9 +84,7 @@ function RedactPII() {
               </div>
             </div>
           )}
-          <pre style={{ background: '#f9fafb', padding: 14, borderRadius: 8, fontSize: 12, overflow: 'auto', whiteSpace: 'pre-wrap' }}>
-            {JSON.stringify(result.result || result, null, 2)}
-          </pre>
+          <AIReport response={result.result || result} title="PII redaction report" />
         </div>
       )}
     </div>

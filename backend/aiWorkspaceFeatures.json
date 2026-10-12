@@ -1,0 +1,114 @@
+[
+  {
+    "name": "CfDifferentialPrivacySynthesisToPreventReIdentification",
+    "id": "cf-differential-privacy-synthesis-to-prevent-re-identification/history",
+    "title": "Differential-privacy synthesis to prevent re-identification",
+    "description": "Prepare a professional advisory report for differential-privacy synthesis to prevent re-identification using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "CfDistributionLearningCapturingStatisticalPropertiesFromReal",
+    "id": "cf-distribution-learning-capturing-statistical-properties-from-real-data/history",
+    "title": "Distribution learning capturing statistical properties from real data",
+    "description": "Prepare a professional advisory report for distribution learning capturing statistical properties from real data using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "CfDomainSpecificGeneratorsHealthcareFinanceWithRegulatory",
+    "id": "cf-domain-specific-generators-healthcare-finance-with-regulatory-presets/history",
+    "title": "Domain-specific generators (healthcare, finance) with regulatory presets",
+    "description": "Prepare a professional advisory report for domain-specific generators (healthcare, finance) with regulatory presets using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "CfLlmPoweredSchemaInferenceAutoDetectingSchema",
+    "id": "cf-llm-powered-schema-inference-auto-detecting-schema-from-sample-data/history",
+    "title": "LLM-powered schema inference auto-detecting schema from sample data",
+    "description": "Prepare a professional advisory report for llm-powered schema inference auto-detecting schema from sample data using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "CfRelationalDataGenerationRespectingForeignKeysAnd",
+    "id": "cf-relational-data-generation-respecting-foreign-keys-and-cardinality/history",
+    "title": "Relational data generation respecting foreign keys and cardinality",
+    "description": "Prepare a professional advisory report for relational data generation respecting foreign keys and cardinality using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "CfTargetedEdgeCaseAndOutlierGenerationFor",
+    "id": "cf-targeted-edge-case-and-outlier-generation-for-testing/history",
+    "title": "Targeted edge-case and outlier generation for testing",
+    "description": "Prepare a professional advisory report for targeted edge-case and outlier generation for testing using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapNoDataMaskingAnonymizationAi",
+    "id": "gap-no-data-masking-anonymization-ai/history",
+    "title": "No data masking/anonymization AI",
+    "description": "Prepare a professional advisory report for no data masking/anonymization ai using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapNoDatasetPreviewEndpoint",
+    "id": "gap-no-dataset-preview-endpoint/history",
+    "title": "No dataset preview endpoint",
+    "description": "Prepare a professional advisory report for no dataset preview endpoint using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapNoDistributionAwareGeneration",
+    "id": "gap-no-distribution-aware-generation/history",
+    "title": "No distribution-aware generation",
+    "description": "Prepare a professional advisory report for no distribution-aware generation using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapNoExportToCsvParquetJson",
+    "id": "gap-no-export-to-csv-parquet-json/history",
+    "title": "No export to CSV/Parquet/JSON",
+    "description": "Prepare a professional advisory report for no export to csv/parquet/json using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapNoMultiTenantProjectWorkspaces",
+    "id": "gap-no-multi-tenant-project-workspaces/history",
+    "title": "No multi-tenant project workspaces",
+    "description": "Prepare a professional advisory report for no multi-tenant project workspaces using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapNoNotificationsIntegrationsAuditLogSubsystemsOnly",
+    "id": "gap-no-notifications-integrations-audit-log-subsystems-only-stub/history",
+    "title": "No notifications, integrations, audit log subsystems (only stub references)",
+    "description": "Prepare a professional advisory report for no notifications, integrations, audit log subsystems (only stub references) using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapNoPrivacyCompliancePiiRedaction",
+    "id": "gap-no-privacy-compliance-pii-redaction/history",
+    "title": "No privacy compliance / PII redaction",
+    "description": "Prepare a professional advisory report for no privacy compliance / pii redaction using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapNoSchemaEditorBackend",
+    "id": "gap-no-schema-editor-backend/history",
+    "title": "No schema editor backend",
+    "description": "Prepare a professional advisory report for no schema editor backend using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapNoSchemaInferenceFromSamples",
+    "id": "gap-no-schema-inference-from-samples/history",
+    "title": "No schema inference from samples",
+    "description": "Prepare a professional advisory report for no schema inference from samples using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapNoSyntheticDataGenerationEngineEndpoint",
+    "id": "gap-no-synthetic-data-generation-engine-endpoint/history",
+    "title": "No synthetic data generation engine endpoint",
+    "description": "Prepare a professional advisory report for no synthetic data generation engine endpoint using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  }
+]

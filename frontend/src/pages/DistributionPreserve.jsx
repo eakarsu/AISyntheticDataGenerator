@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { datasets } from '../services/api';
+import FullFieldPresets from '../components/FullFieldPresets';
+import AIReport from '../components/AIReport';
 
 const SAMPLE = `[
   { "id": 1, "age": 32, "country": "US", "spend": 120.50, "tier": "gold" },
@@ -7,6 +9,11 @@ const SAMPLE = `[
   { "id": 3, "age": 41, "country": "US", "spend": 210.00, "tier": "gold" },
   { "id": 4, "age": 24, "country": "FR", "spend": 18.75, "tier": "bronze" }
 ]`;
+const EXAMPLES = [
+  { label: 'Tabular distribution', values: { name: 'Example product metrics', category: 'tabular', rowCount: 25, samplesText: JSON.stringify([{ item_id: 101, units: 12, market: 'North', rating: 4 }, { item_id: 102, units: 3, market: 'South', rating: 5 }, { item_id: 103, units: 8, market: 'North', rating: 3 }], null, 2) } },
+  { label: 'Time-series observations', values: { name: 'Example hourly readings', category: 'timeseries', rowCount: 48, samplesText: JSON.stringify([{ hour: '2026-01-01T08:00:00Z', temperature: 19.2, status: 'normal' }, { hour: '2026-01-01T09:00:00Z', temperature: 20.1, status: 'normal' }, { hour: '2026-01-01T10:00:00Z', temperature: 18.8, status: 'review' }], null, 2) } },
+  { label: 'Survey results', values: { name: 'Example service survey', category: 'surveys', rowCount: 100, samplesText: JSON.stringify([{ response_id: 1, score: 5, channel: 'web', comment: 'Easy to follow' }, { response_id: 2, score: 3, channel: 'email', comment: 'Could be clearer' }, { response_id: 3, score: 4, channel: 'web', comment: 'Helpful details' }], null, 2) } },
+];
 
 function DistributionPreserve() {
   const [samplesText, setSamplesText] = useState(SAMPLE);
@@ -54,6 +61,7 @@ function DistributionPreserve() {
       <p style={{ color: '#64748b', marginBottom: 24 }}>Generate synthetic rows that preserve the statistical distributions of your real data samples.</p>
 
       <form onSubmit={handleSubmit} style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 24, marginBottom: 20 }}>
+        <FullFieldPresets value={{ samplesText, name, category, rowCount }} presets={EXAMPLES} disabled={loading} onChange={(values) => { setSamplesText(values.samplesText); setName(values.name); setCategory(values.category); setRowCount(values.rowCount); setError(null); setParseError(null); setResult(null); }} />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14, marginBottom: 14 }}>
           <div>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: 6 }}>Dataset Name (optional)</label>
@@ -97,10 +105,7 @@ function DistributionPreserve() {
 
       {result && (
         <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 20 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12 }}>Result</h2>
-          <pre style={{ background: '#f9fafb', padding: 14, borderRadius: 8, fontSize: 12, overflow: 'auto', whiteSpace: 'pre-wrap' }}>
-            {JSON.stringify(result.result || result, null, 2)}
-          </pre>
+          <AIReport response={result.result || result} title="Distribution-preserving dataset report" />
         </div>
       )}
     </div>

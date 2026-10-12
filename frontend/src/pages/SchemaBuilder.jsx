@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { datasets } from '../services/api';
+import FullFieldPresets from '../components/FullFieldPresets';
 
 const SAMPLE_SCHEMA = {
   type: 'object',
@@ -13,6 +14,11 @@ const SAMPLE_SCHEMA = {
     country: { type: 'string', description: 'Country of residence' },
   },
 };
+const EXAMPLES = [
+  { label: 'Product catalog', values: { schemaText: JSON.stringify({ type: 'object', required: ['item_id', 'title', 'price'], properties: { item_id: { type: 'integer', minimum: 1 }, title: { type: 'string', description: 'Fictional catalog item title' }, price: { type: 'number', minimum: 0 }, active: { type: 'boolean' } } }, null, 2), count: 10, name: 'Example product catalog', description: 'Generate fictional catalog rows with varied prices and availability for interface testing.' } },
+  { label: 'Sensor readings', values: { schemaText: JSON.stringify({ type: 'object', required: ['recorded_at', 'temperature'], properties: { recorded_at: { type: 'string', format: 'date-time' }, temperature: { type: 'number', minimum: -20, maximum: 55 }, unit: { type: 'string', enum: ['C', 'F'] }, online: { type: 'boolean' } } }, null, 2), count: 25, name: 'Example sensor readings', description: 'Generate synthetic sample telemetry for chart and validation tests; do not use as real measurements.' } },
+  { label: 'Survey responses', values: { schemaText: JSON.stringify({ type: 'object', required: ['response_id', 'score'], properties: { response_id: { type: 'integer', minimum: 1 }, score: { type: 'integer', minimum: 1, maximum: 5 }, channel: { type: 'string', enum: ['web', 'email'] }, comment: { type: 'string' } } }, null, 2), count: 50, name: 'Example survey responses', description: 'Generate synthetic feedback records for testing summaries and analytics.' } },
+];
 
 function SchemaBuilder() {
   const navigate = useNavigate();
@@ -74,6 +80,9 @@ function SchemaBuilder() {
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+        <div style={{ gridColumn: '1 / -1' }}>
+          <FullFieldPresets value={{ schemaText, count, name, description }} presets={EXAMPLES} disabled={loading} onChange={(values) => { setSchemaText(values.schemaText); setCount(values.count); setName(values.name); setDescription(values.description); setSchemaError(null); setError(null); setResult(null); }} />
+        </div>
         {/* Schema Editor */}
         <div>
           <label style={{ fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>JSON Schema</label>

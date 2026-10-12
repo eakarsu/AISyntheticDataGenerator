@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { datasets } from '../services/api';
+import FullFieldPresets from '../components/FullFieldPresets';
+import AIReport from '../components/AIReport';
 
 const SAMPLE = `[
   { "id": 1, "name": "Alice", "email": "alice@example.com", "age": 32, "country": "US" },
   { "id": 2, "name": "Bob", "email": "bob@example.com", "age": 28, "country": "DE" }
 ]`;
+const EXAMPLES = [
+  { label: 'Product catalog', values: { name: 'Example product catalog schema', samplesText: JSON.stringify([{ item_id: 101, title: 'Desk lamp', active: true, price: 34.5 }, { item_id: 102, title: 'Notebook', active: true, price: 5.25 }], null, 2) } },
+  { label: 'Device readings', values: { name: 'Example sensor schema', samplesText: JSON.stringify([{ recorded_at: '2026-01-01T08:00:00Z', temperature: 19.2, unit: 'C', online: true }, { recorded_at: '2026-01-01T09:00:00Z', temperature: 20.1, unit: 'C', online: false }], null, 2) } },
+  { label: 'Survey responses', values: { name: 'Example survey schema', samplesText: JSON.stringify([{ response_id: 1, score: 5, channel: 'web', comment: 'Easy to follow' }, { response_id: 2, score: 3, channel: 'email', comment: 'Could be clearer' }], null, 2) } },
+];
 
 function SchemaInfer() {
   const [samplesText, setSamplesText] = useState(SAMPLE);
@@ -45,6 +52,7 @@ function SchemaInfer() {
       <p style={{ color: '#64748b', marginBottom: 24 }}>Paste sample rows and let AI infer column types, formats, and PII.</p>
 
       <form onSubmit={handleSubmit} style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 24, marginBottom: 20 }}>
+        <FullFieldPresets value={{ samplesText, name }} presets={EXAMPLES} disabled={loading} onChange={(values) => { setSamplesText(values.samplesText); setName(values.name); setError(null); setParseError(null); setResult(null); }} />
         <div style={{ marginBottom: 14 }}>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: 6 }}>Dataset Name (optional)</label>
           <input type="text" value={name} onChange={(e) => setName(e.target.value)}
@@ -68,9 +76,7 @@ function SchemaInfer() {
       {result && (
         <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 20 }}>
           <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 12 }}>Inferred Schema</h2>
-          <pre style={{ background: '#f9fafb', padding: 14, borderRadius: 8, fontSize: 12, overflow: 'auto', whiteSpace: 'pre-wrap' }}>
-            {JSON.stringify(result.schema || result, null, 2)}
-          </pre>
+          <AIReport response={result.schema || result} title="Inferred schema report" />
         </div>
       )}
     </div>

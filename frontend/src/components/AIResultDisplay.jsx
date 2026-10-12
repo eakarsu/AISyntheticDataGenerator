@@ -1,3 +1,4 @@
+import FormattedAIReport from "./FormattedAIReport";
 import React, { useState } from 'react';
 
 function AIResultDisplay({ result, category, categoryInfo, onSave, onClose }) {
@@ -172,9 +173,7 @@ function AIResultDisplay({ result, category, categoryInfo, onSave, onClose }) {
         {viewMode === 'formatted' ? (
           renderFormattedResult(result.result)
         ) : (
-          <pre className="ai-json-view">
-            {JSON.stringify(result.result, null, 2)}
-          </pre>
+          <FormattedAIReport response={result.result} />
         )}
       </div>
     </div>

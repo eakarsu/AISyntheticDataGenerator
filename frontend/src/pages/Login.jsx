@@ -8,15 +8,16 @@ function Login({ onLogin }) {
   const [error, setError] = useState('');
 
   const handleAutoFill = async () => {
-    try {
-      const defaults = await auth.getDefaults();
-      setEmail(defaults.email);
-      setPassword(defaults.password);
-      setError('');
-    } catch {
-      setEmail(import.meta.env.VITE_DEMO_EMAIL || '');
-      setPassword(import.meta.env.VITE_DEMO_PASSWORD || '');
+    const demoEmail = import.meta.env.VITE_DEMO_EMAIL || '';
+    const demoPassword = import.meta.env.VITE_DEMO_PASSWORD || '';
+    if (!demoEmail || !demoPassword) {
+      setError('Demo credentials are unavailable. Start the app with its configured local demo account.');
+      return false;
     }
+    setEmail(demoEmail);
+    setPassword(demoPassword);
+    setError('');
+    return true;
   };
 
   const handleSubmit = async (e) => {
@@ -86,8 +87,8 @@ function Login({ onLogin }) {
               )}
             </button>
 
-            <button type="button" className="btn btn-secondary btn-full" onClick={handleAutoFill}>
-              🔑 Auto Fill Demo Credentials
+            <button type="button" className="btn btn-secondary btn-full" disabled={loading} onClick={async () => { if (await handleAutoFill()) window.setTimeout(() => { const form = document.querySelector('.login-form'); if (form) form.requestSubmit(); }, 150); }}>
+              🔑 Log In as Demo
             </button>
           </form>
 
